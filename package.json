@@ -1,0 +1,19 @@
+{
+  "name": "100subot-monorepo",
+  "private": true,
+  "packageManager": "yarn@4.6.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "generate": "turbo generate",
+    "db:migrate": "yarn workspace @100su/prisma db:migrate"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

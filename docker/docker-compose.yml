@@ -1,0 +1,41 @@
+services:
+  # 1. 데이터베이스 서비스 (PostgreSQL)
+  postgres:
+    image: postgres:latest
+    container_name: 100su-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: 100SUbot
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - 100su-network
+    restart: always
+
+  # 2. 오디오 스트리밍 서비스 (Lavalink v4)
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: 100su-lavalink
+    ports:
+      - "5000:8080" # 외부 포트 5000번을 내 컴퓨터 브라우저나 로컬 봇이 접속할 수 있게 매핑 (Lavalink v4의 컨테이너 내부 기본 포트는 8080입니다)
+    environment:
+      - LAVALINK_SERVER_PASSWORD=youshallnotpass # 봇 .env의 LAVALINK_PASSWORD와 일치해야 함
+      - JAVA_OPTS=-Duser.language=en -Duser.country=US
+    volumes:
+      - ./application.yml:/opt/Lavalink/application.yml
+      - ./plugins:/opt/Lavalink/plugins
+    networks:
+      - 100su-network
+    restart: always
+
+networks:
+  100su-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1400
+
+volumes:
+  postgres-data:

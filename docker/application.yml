@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+
+lavalink:
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
+  server:
+    password: "youshallnotpass"
+    sources:
+      youtube: false # Disable built-in deprecated youtube source
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      mixer: true
+      http: true
+      local: false
+    filters:
+      volume: true
+      equalizer: true
+      channelMix: true
+      distortion: true
+      lowPass: true
+      rotation: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+    bufferDurationMs: 400
+    youtubeSearchEnabled: true
+    soundCloudSearchEnabled: true
+    scTracksLoadLimit: 100
+    gc-warnings: true
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true

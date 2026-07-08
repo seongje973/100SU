@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+// 길드별 환경 설정 테이블
+model Guild {
+  id        String   @id
+  prefix    String   @default("!")
+  volume    Int      @default(100) // 기본 볼륨
+  createdAt DateTime @default(now())
+}
+
+// 유저 테이블
+model User {
+  id        String     @id // 디스코드 유저 ID
+  createdAt DateTime   @default(now())
+  playlists Playlist[]
+}
+
+// 유저별 커스텀 플레이리스트
+model Playlist {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  songs     Song[]
+
+  @@unique([userId, name]) // 한 유저가 동일한 이름의 플레이리스트를 만들 수 없도록 유니크 제약 조건 설정
+}
+
+// 플레이리스트 내부 수록곡
+model Song {
+  id          String   @id @default(uuid())
+  playlistId  String
+  playlist    Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  title       String
+  author      String
+  url         String
+  duration    Int      // 재생 시간 (ms)
+  thumbnail   String?
+  lavalinkInfo Json?   // Lavalink 트랙 원본 정보 저장용
+  position    Int      // 플레이리스트 내 수록 순서
+}

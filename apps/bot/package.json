@@ -1,0 +1,25 @@
+{
+  "name": "@100su/bot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@100su/prisma": "workspace:*",
+    "@100su/utils": "workspace:*",
+    "@sapphire/framework": "^5.0.0",
+    "@sapphire/pieces": "^3.0.0",
+    "@sapphire/plugin-logger": "^3.0.0",
+    "discord.js": "^14.14.0",
+    "dotenv": "^16.0.0",
+    "lavalink-client": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}
